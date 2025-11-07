@@ -1,0 +1,30 @@
+name: Build and Push Docker Image (by Sang)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🔹 Checkout code
+      uses: actions/checkout@v3
+
+    - name: 🔹 Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: 🔹 Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: 🔹 Build and push Docker image (by Sang)
+      uses: docker/build-push-action@v6
+      with:
+        push: true
+        tags: minhsang31th7/wordsmith:latest
